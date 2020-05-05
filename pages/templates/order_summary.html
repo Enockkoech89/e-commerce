@@ -1,0 +1,213 @@
+{% load cart_template_tags %}
+
+<html><head><base target="_parent"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/bootstrap.min.css"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/mdb.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>    html,
+    body,
+    header,
+    .carousel {
+      height: 60vh;
+    }
+
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+.view,body,html{height:100%}.carousel{height:50%}.carousel .carousel-inner,.carousel .carousel-inner .active,.carousel .carousel-inner .carousel-item{height:100%}@media (max-width:776px){.carousel{height:100%}}.page-footer{background-color:#929FBA}</style><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head><body aria-busy="true"><!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand waves-effect" href="{% url 'home' %}">
+        <strong class="blue-text">Skoolflyx</strong>
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'home' %}">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'about' %}">About Us</a>
+          </li>
+                    
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a href="{% url 'order-summary' %}" class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li>
+            <a class="nav-link waves-effect" href="{% url 'profile' %}">Profile</a>
+          </li>
+          
+
+          {% else %}
+
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a href="https://www.facebook.com/glady.jepkirui" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+  <main>
+    <main class="mt-5 pt-4">
+    {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+    {% endif %}
+      <div class="container">
+
+       
+      <!--/.Navbar-->
+      <h2>Order Summary</h2>
+
+         <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Paper Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              {% for order_item in object.items.all %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{order_item.item.title}}</td>
+                <td>
+                  {% if order_item.item.discountedprice %}
+                    {{order_item.item.discountedprice}}
+                  {% else %}
+                    {{order_item.item.originalprice}}
+                  {% endif %}
+                </td>
+                  <td>
+                    <a href="{% url 'remove-single-item' order_item.item.pk %}"><i class="fas fa-minus mr-2"></i></a>
+
+                    {{ order_item.quantity }}
+                    
+                    <a href="{% url 'add-to-cart' order_item.item.pk %}"><i class="fas fa-plus ml-2"></i></a>
+                </td>
+                  <td>
+                  {% if order_item.item.discountedprice %}
+                    Ksh{{ order_item.get_total_discounted_price }}
+                  {% else %}
+                    Ksh{{order_item.get_total_original_price}}
+                  {% endif %}
+                  <a style="color:red;" href="{% url 'remove-from-cart' order_item.item.pk %}"><i class="far fa-trash-alt float-right"></i></a>
+                </td>
+
+              
+
+                </tr>
+                {% empty %}
+
+                <tr>
+                  <td colspan="5">
+                    You dont have an order
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                    <a class="btn btn-primary float-right mr-2" href="{% url 'home' %}">Continue shopping</a>
+                    
+                  </td>
+                {% endfor %}
+
+                {% if object.get_total %}
+
+                <tr>
+                  <td colspan="4"><b>Order Total</b></td>
+                  <td><b> Ksh{{ object.get_total }}</b></td>
+                </tr>
+                
+                </tr>
+                  
+                <tr>
+                  <td colspan="5">
+                    <a class="btn btn-warning float-right ml-2 " href="{% url 'checkout' %}">Proceed to Checkout</a>
+                    <a class="btn btn-primary float-right mr-2" href="{% url 'home' %}">Continue shopping</a>
+                    
+                  </td>
+          
+                </tr>
+
+                {% endif %}
+
+             
+            </tbody>
+            
+          </table>
+
+      </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <!--Copyright-->
+    <div class="footer-copyright py-1">
+      © 2020 Copyright:Skoolflyx
+      <br>
+      <i>created and designed by</i><a href="https://frankfredtechweb.herokuapp.com" target="_blank"> FrankFred|Tech </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer--><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/jquery.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/popper.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/bootstrap.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/mdb.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script><script type="text/javascript">new WOW().init();</script>
+  <div class="hiddendiv common"></div>
+  </body>
+</html>

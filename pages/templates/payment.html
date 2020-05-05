@@ -1,0 +1,104 @@
+{% load crispy_forms_tags %}
+
+<html><head><base target="_parent"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/bootstrap.min.css"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/mdb.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style> 
+    body,
+    header,
+    .carousel {
+      height: 60vh;
+    }
+
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+.view,body,html{height:100%}.carousel{height:50%}.carousel .carousel-inner,.carousel .carousel-inner .active,.carousel .carousel-inner .carousel-item{height:100%}@media (max-width:776px){.carousel{height:100%}}.page-footer{background-color:#929FBA}</style><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head><body aria-busy="true"><!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+     
+      <a class="navbar-brand waves-effect" href="{% url 'home' %}">
+        <strong class="blue-text">Skoolflyx</strong>
+      </a>
+
+    
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'home' %}">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'about' %}">About Us</a>
+          </li>
+         
+          
+        </ul> 
+           
+
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Navbar -->
+  <main>
+     {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+      {% endif %}
+     <div class="container wow fadeIn">
+      <hr>
+      <h2 class="my-5 h2 text-center">Payment</h2>
+      <div class="row">
+        <div class="col-md-12 mb-4">
+          <div class="card">
+            <form action="." method="POST" class="card-body">
+              {% csrf_token %}
+
+              <hr>
+
+              <h3>Enter M-Pesa Phone</h3>
+
+                <div class="container">
+                  {{ p_form|crispy }}          
+
+                </div>
+
+
+              <hr class="mb-4">
+              <button class="btn btn-primary btn-sm btn-block" type="submit">checkout</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</main>
+
+  <!--/.Footer--><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/jquery.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/popper.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/bootstrap.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/mdb.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script><script type="text/javascript">new WOW().init();</script>
+  <div class="hiddendiv common"></div>
+  </body>
+</html>

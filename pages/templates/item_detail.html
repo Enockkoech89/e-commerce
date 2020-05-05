@@ -1,0 +1,294 @@
+{% load cart_template_tags %}
+{% load embed_video_tags %}
+
+<html><head><base target="_parent"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/bootstrap.min.css"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/mdb.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>/* Footer color for sake of consistency with Navbar */
+.page-footer {
+  background-color: #929FBA; }</style><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head><body aria-busy="true"><!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand waves-effect" href="{% url 'home' %}">
+        <strong class="blue-text">Skoolflyx</strong>
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'home' %}">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'about' %}">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="#" target="_blank">Free download</a>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a href="{% url 'order-summary' %}" class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li>
+            <a class="nav-link waves-effect" href="{% url 'profile' %}">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="#" target="_blank">Order Downloads</a>
+          </li>
+
+          {% else %}
+
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a href="https://www.facebook.com/glady.jepkirui" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+                
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+    
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+    {% endif %}
+
+    <div class="container dark-grey-text mt-5">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        {% if item.image1.url %}
+        <div class="col-md-6 mb-4">
+          <img src="{{ object.image1.url }}"  width="100%" height="500" alt="">
+        </div>
+        {% endif %}
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+            <div class="mb-3">
+              <a href="">
+                <span class="badge purple mr-1">{{ object.get_exam_display }}</span>
+              </a>
+              <a href="">
+                <span class="badge blue mr-1">Premium Paper</span>
+              </a>
+            </div>
+
+            <p class="lead">
+              <span class="mr-1">
+                <del>KSh{{ object.originalprice }}</del>
+              </span>
+              <span>Ksh{{ object.discountedprice }}</span>
+            </p>
+
+            <p class="lead font-weight-italic">{{ object.description }}</p>
+
+              <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-sm my-0 p waves-effect waves-light">Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </a> 
+              <hr>
+             
+              <div class="responsive">
+                                
+                <div class='iframe-container'>
+                
+                    {% video item.video as my_video %}
+                      
+                        {% video my_video '282 x 250' %}
+
+                    {% endvideo %}
+
+                </div>
+                
+              </div>
+                            
+                       
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">Materials Preview</h4>
+
+             
+
+                    
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        {% if object.image2 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image2.url }}" width="100%" height="100%" alt="">
+
+        </div>
+        {% endif %}
+        <!--Grid column-->
+
+        <!--Grid column-->
+        {% if object.image3 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image3.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+        <!--Grid column-->
+
+        <!--Grid column-->
+        {% if object.image4 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image4.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+        <!--Grid column-->
+        {% if object.image5 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image5.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+        {% if object.image6 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image6.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+        {% if object.image7 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image7.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+        {% if object.image8 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image8.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+
+        {% if object.image9 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image9.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+        {% if object.image10 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image10.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+        {% if object.image11 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image11.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+        {% if object.image12 %}
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="{{ object.image12.url }}" width="100%" height="250" alt="">
+
+        </div>
+        {% endif %}
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn fixed-bottom">
+    <!--Copyright-->
+    <div class="footer-copyright py-1">
+      © 2020 Copyright:Skoolflyx
+      <br>
+      <i>created and designed by</i><a href="https://frankfredtechweb.herokuapp.com" target="_blank"> FrankFred|Tech </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer--><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/jquery.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/popper.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/bootstrap.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/js/mdb.min.js"></script><script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script><script type="text/javascript">    new WOW().init();
+</script><div class="hiddendiv common"></div></body></html>
