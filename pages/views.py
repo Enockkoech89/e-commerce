@@ -182,7 +182,7 @@ class Payment2View(LoginRequiredMixin, View):
 			order.ordered = True
 			order.payment = payment
 			order.save()
-			messages.success(self.request, 'Your have successfully placed an order. You can acesss the learning materials here')
+			messages.success(self.request, 'Your have successfully placed an order. We are currently reviewing your payment and once we are done, we will send the materials to your mail. you can update your mail in your profile')
 			return redirect('/')
 
 
