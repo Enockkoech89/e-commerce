@@ -120,7 +120,7 @@ class PaymentView(LoginRequiredMixin, View):
 					"PartyA": my_phone,
 					"PartyB": 174379,
 					"PhoneNumber": my_phone,
-					"CallBackURL": "https://frenkfredtech.com/pay",
+					"CallBackURL": "https://skoolflyx.com",
 					"AccountReference": "2884321",
 					"TransactionDesc": "pay fees"
 			}
@@ -135,19 +135,13 @@ class PaymentView(LoginRequiredMixin, View):
 			)
 
 			payment.save()
-
-			# order_items = order.items.all()
-			# order_items.update(ordered=True)
-			# for item in order_items:
-			# 	item.save()
-
 			order.payment=payment
 			order.save()
 			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
 			return redirect('home')
 		except:
-			messages.warning(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
-			return redirect('order-summary')
+			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
+			return redirect('home')
 
 class Payment2View(LoginRequiredMixin, View):
 	def get(self, *args, **kwargs):
