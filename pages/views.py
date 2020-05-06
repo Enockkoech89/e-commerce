@@ -146,7 +146,7 @@ class PaymentView(LoginRequiredMixin, View):
 			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
 			return redirect('home')
 		except:
-			messages.warning(self.request, 'Failed checkout. Please enter payment details correctly')
+			messages.warning(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
 			return redirect('order-summary')
 
 class Payment2View(LoginRequiredMixin, View):
