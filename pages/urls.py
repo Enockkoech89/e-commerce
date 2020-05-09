@@ -14,6 +14,7 @@ from .views import (
     PriView,
     SecView,
     FreePapersView,
+    CompletedOrderView
 )
 
 urlpatterns = [
@@ -33,5 +34,6 @@ urlpatterns = [
     path('pri/', PriView.as_view(), name='pri-exam'),
     path('sec/', SecView.as_view(), name='sec-exam'),
     path('free-papers/', FreePapersView.as_view(), name='free-papers'),
+    path('complete-papers/', CompletedOrderView.as_view(), name='complete'),
     
 ]

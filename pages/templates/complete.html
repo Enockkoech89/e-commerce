@@ -73,7 +73,7 @@
           </li>
            <li>
             <a class="nav-link waves-effect" href="{% url 'complete' %}">Purchases</a>
-          </li>
+          </li>          
 
           {% else %}
 
@@ -110,84 +110,65 @@
 
        
       <!--/.Navbar-->
-      <h2>Order Summary</h2>
+      <h2 class="text-center">You can download orders Here</h2>
+      <p class="text-center"><i class="text-sm">Note: Only orders that have been paid will be visible</i></p>
 
-         <table class="table">
+         <table class="table" >
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Paper Title</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
+                <th scope="col">Link1</th>
               </tr>
             </thead>
             
             <tbody>
-              {% for order_item in object.items.all %}
+            {% for order_item in object %}
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{order_item.item.title}}</td>
-                <td>
-                  {% if order_item.item.discountedprice %}
-                    {{order_item.item.discountedprice}}
-                  {% else %}
-                    {{order_item.item.originalprice}}
-                  {% endif %}
-                </td>
-                  <td>
-                    <a href="{% url 'remove-single-item' order_item.item.pk %}"><i class="fas fa-minus mr-2"></i></a>
-
-                    {{ order_item.quantity }}
-                    
-                    <a href="{% url 'add-to-cart' order_item.item.pk %}"><i class="fas fa-plus ml-2"></i></a>
-                </td>
-                  <td>
-                  {% if order_item.item.discountedprice %}
-                    Ksh{{ order_item.get_total_discounted_price }}
-                  {% else %}
-                    Ksh{{order_item.get_total_original_price}}
-                  {% endif %}
-                  <a style="color:red;" href="{% url 'remove-from-cart' order_item.item.pk %}"><i class="far fa-trash-alt float-right"></i></a>
-                </td>
-
-              
-
-                </tr>
-                {% empty %}
-
-                <tr>
-                  <td colspan="5">
-                    You dont have an order
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="5">
-                    <a class="btn btn-primary float-right mr-2" href="{% url 'home' %}">Continue shopping</a>
-                    
-                  </td>
-                {% endfor %}
-
-                {% if object.get_total %}
-
-                <tr>
-                  <td colspan="4"><b>Order Total</b></td>
-                  <td><b> Ksh{{ object.get_total }}</b></td>
-                </tr>
-                
-                </tr>
-                  
-                <tr>
-                  <td colspan="5">
-                    <a class="btn btn-warning float-right ml-2 " href="{% url 'checkout' %}">Proceed to Checkout</a>
-                    <a class="btn btn-primary float-right mr-2" href="{% url 'home' %}">Continue shopping</a>
-                    
-                  </td>
-          
-                </tr>
-
+                {% if order_item.item.link_url1 %}
+                {% if order_item.item.link_url1 %}
+                <td ><a target="blank" href='{{ order_item.item.link_url1 }}'>Download1</a></td>
+                {% endif %}
+                <td><a href='{{ order_item.item.link_url2 }}'>Download2</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url2 %}
+                <td><a target= "blank" href='{{ order_item.item.link_url3 }}'>Download3</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url3 %}
+                <td><a href='{{ order_item.item.link_url4 }}'>Download4</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url4 %}
+                <td><a href='{{ order_item.item.link_url5 }}'>Download5</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url5 %}
+                <td><a href='{{ order_item.item.link_url6 }}'>Download6</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url6 %}
+                <td><a href='{{ order_item.item.link_url7 }}'>Download7</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url7 %}
+                <td><a href='{{ order_item.item.link_url8 }}'>Download8</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url8 %}
+                <td><a href='{{ order_item.item.link_url9 }}'>Download9</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url9 %}
+                <td><a href='{{ order_item.item.link_url10 }}'>Download10</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url10 %}
+                <td><a href='{{ order_item.item.link_url11 }}'>Download11</a></td>
+                {% endif %}
+                 {% if order_item.item.link_url11 %}
+                <td><a href='{{ order_item.item.link_url12 }}'>Download12</a></td>
                 {% endif %}
 
+                 
+
+              </tr>
+            {% endfor %}
+            
              
             </tbody>
             
@@ -198,7 +179,7 @@
   <!--Main layout-->
 
   <!--Footer-->
-  <footer class="page-footer text-center font-small mt-4 wow blue">
+  <footer class="page-footer text-center font-small mt-4 wow blue fixed-bottom">
 
     <!--Copyright-->
     <div class="footer-copyright py-1">

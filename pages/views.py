@@ -137,10 +137,10 @@ class PaymentView(LoginRequiredMixin, View):
 			payment.save()
 			order.payment=payment
 			order.save()
-			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
+			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and once we are done, we will activate the order and you will be able to access the materials at Purchases tab in the nav bar.')
 			return redirect('home')
 		except:
-			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and send the materials into your email. If you need to change your email, you can always do so from your profile link in the nav bar')
+			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and once we are done, we will activate the order and you will be able to access the materials at Purchases tab in the nav bar.')
 			return redirect('home')
 
 class Payment2View(LoginRequiredMixin, View):
@@ -176,7 +176,7 @@ class Payment2View(LoginRequiredMixin, View):
 			order.ordered = True
 			order.payment = payment
 			order.save()
-			messages.success(self.request, 'Your have successfully placed an order. We are currently reviewing your payment and once we are done, we will send the materials to your mail. you can update your mail in your profile')
+			messages.success(self.request, 'Your have successfully placed an order. You can download the materials from the Purchases tab in the nav bar')
 			return redirect('/')
 
 
@@ -356,23 +356,20 @@ class FreePapersView(ListView):
 
 		
 
-# class CompletedOrderView(LoginRequiredMixin, View):
-# 	def get(self, *args, **kwargs):
+class CompletedOrderView(LoginRequiredMixin, View):
+	def get(self, *args, **kwargs):
 
-# 		try:
-# 			order = Order.objects.filter(user=self.request.user, ordered=True)[0]
-# 			context = {
-# 				'object': order
-# 			}
-# 			return render(self.request, 'complete.html', context)
-# 		except MultipleObjectsReturned:
+		try:
+			order = OrderItem.objects.filter(user=self.request.user, ordered=True)
+			context = {
+				'object': order
+			}
+			return render(self.request, 'complete.html', context)
+		except ObjectDoesNotExist:
 			
-			
-# 			messages.error(self.request, "You can only acesss orders with completed payment status. Continue shopping or proceed to checkout")
-# 			return redirect("complete.html")
-# 		return render(self.request, 'complete.html')
-
-
+			messages.error(self.request, "You can only acesss orders with completed payment status. Continue shopping or proceed to checkout")
+			return redirect("order_summary.html")
+		return render(self.request, 'complete.html')
 
 	
 
