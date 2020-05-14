@@ -31,7 +31,7 @@
 
       <!-- Brand -->
       <a class="navbar-brand waves-effect" href="{% url 'home' %}">
-        <strong class="blue-text">Skoolflyx</strong>
+        <strong class="blue-text">SCHOOLFLYX</strong>
       </a>
 
       <!-- Collapse -->
@@ -118,7 +118,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Paper Title</th>
-                <th scope="col">Link1</th>
+                <th scope="col">Download Link</th>
               </tr>
             </thead>
             
@@ -128,39 +128,39 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{order_item.item.title}}</td>
                 {% if order_item.item.link_url1 %}
-                {% if order_item.item.link_url1 %}
                 <td ><a target="blank" href='{{ order_item.item.link_url1 }}'>Download1</a></td>
                 {% endif %}
+                {% if order_item.item.link_url2 %}
                 <td><a href='{{ order_item.item.link_url2 }}'>Download2</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url2 %}
+                 {% if order_item.item.link_url3 %}
                 <td><a target= "blank" href='{{ order_item.item.link_url3 }}'>Download3</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url3 %}
+                 {% if order_item.item.link_url4 %}
                 <td><a href='{{ order_item.item.link_url4 }}'>Download4</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url4 %}
+                 {% if order_item.item.link_url5 %}
                 <td><a href='{{ order_item.item.link_url5 }}'>Download5</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url5 %}
+                 {% if order_item.item.link_url6 %}
                 <td><a href='{{ order_item.item.link_url6 }}'>Download6</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url6 %}
+                 {% if order_item.item.link_url7 %}
                 <td><a href='{{ order_item.item.link_url7 }}'>Download7</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url7 %}
+                 {% if order_item.item.link_url8 %}
                 <td><a href='{{ order_item.item.link_url8 }}'>Download8</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url8 %}
+                 {% if order_item.item.link_url9 %}
                 <td><a href='{{ order_item.item.link_url9 }}'>Download9</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url9 %}
+                 {% if order_item.item.link_url10 %}
                 <td><a href='{{ order_item.item.link_url10 }}'>Download10</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url10 %}
+                 {% if order_item.item.link_url11 %}
                 <td><a href='{{ order_item.item.link_url11 }}'>Download11</a></td>
                 {% endif %}
-                 {% if order_item.item.link_url11 %}
+                {% if order_item.item.link_url12 %}
                 <td><a href='{{ order_item.item.link_url12 }}'>Download12</a></td>
                 {% endif %}
 
