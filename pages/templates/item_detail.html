@@ -53,7 +53,7 @@
             <a class="nav-link waves-effect" href="{% url 'profile' %}">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="#" target="_blank">Order Downloads</a>
+            <a class="nav-link waves-effect" href="{% url 'complete' %}">Purchases</a>
           </li>
 
           {% else %}
@@ -127,7 +127,7 @@
 
             <p class="lead font-weight-italic">{{ object.description }}</p>
 
-              <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-sm my-0 p waves-effect waves-light">Add to cart
+              <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-sm my-0 p waves-effect waves-light">Order Paper Now
                 <i class="fas fa-shopping-cart ml-1"></i>
               </a> 
               <hr>

@@ -255,7 +255,7 @@
 
             <li class="nav-item">
               <span class="badge badge-danger">
-                  For Help call: skoolflyx2020@gmail.com. Thank you for choosing SkoolFlyx
+                  For Help mail: skoolflyx2020@gmail.com. Thank you for choosing SkoolFlyx
             </span>
             </li>
             
@@ -307,9 +307,11 @@
                       </strong>
                     </h5>
 
-                    <h4 class="font-weight-bold blue-text">
+                    <h4 class="font-weight-bold red-text">
                       <strong>Ksh{{ item.discountedprice }}</strong>
-                    </h4>              
+                    </h4>
+                    <a href="{% url 'product-detail' item.id %}" class="btn btn-Success btn-sm my-0 p waves-effect waves-light">View Paper
+                    </a>             
 
                   </div>
                   <!--Card content-->
