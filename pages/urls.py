@@ -14,7 +14,9 @@ from .views import (
     PriView,
     SecView,
     FreePapersView,
-    CompletedOrderView
+    CompletedOrderView,
+    VideoView
+
 )
 
 urlpatterns = [
@@ -28,6 +30,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
     path('about/', views.about, name='about'),
+    path('videos/', VideoView.as_view(), name='videos'),
     path('payment/', PaymentView.as_view(), name='payment'),
     path('payment2/', Payment2View.as_view(), name='payment2'),
     path('selector/', payment_selector, name='selector'),

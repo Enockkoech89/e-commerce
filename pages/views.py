@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, View
 from .forms import PaymentForm, UserUpdateForm, ProfileUpdateForm
 from django.utils import timezone
-from .models import Item, OrderItem, Order, BillingAddress, Payment, Free
+from .models import Item, OrderItem, Order, BillingAddress, Payment, Free, Sinema
 from .credentials import business_shortcode, lipa_na_mpesa_passkey, my_consumer_key, my_consumer_secret, my_number
 from requests.auth import HTTPBasicAuth
 from .forms import UserRegisterForm
@@ -386,6 +386,21 @@ class CompletedOrderView(LoginRequiredMixin, View):
 			messages.error(self.request, "You can only acesss orders with completed payment status. Continue shopping or proceed to checkout")
 			return redirect("order_summary.html")
 		return render(self.request, 'complete.html')
+
+
+
+class VideoView(ListView):
+	model = Sinema
+	paginate_by = 12
+	template_name = 'vids.html'
+	ordering = ['-id']
+
+# def vids(request):
+# 	context = {
+# 		'videos': Sinema.objects.all()
+# 	}
+
+# 	return render(request, 'vids.html', context)
 
 	
 

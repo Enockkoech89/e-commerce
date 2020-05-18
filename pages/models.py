@@ -145,6 +145,12 @@ class Profile(models.Model):
 	def __str__(self):
 		return f'{self.user.username} Profile'
 
+class Sinema(models.Model):
+	title = models.CharField(blank=True, null=True, max_length=100)	
+	afroamigos = EmbedVideoField(blank=True)
+	def __str__(self):
+		return self.title
+
 
 
 	

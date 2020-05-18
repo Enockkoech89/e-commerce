@@ -1,4 +1,5 @@
 {% load cart_template_tags %}
+{% load embed_video_tags %}
 
 <html><head><base target="_parent"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/bootstrap.min.css"><link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB-Pro_4.15.0/css/mdb.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>    html,
 
@@ -253,9 +254,6 @@
             <li class="nav-item">
               <a class="nav-link waves-effect waves-light" href="{% url 'free-papers' %}">Free Downloads</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect waves-light" href="{% url 'videos' %}">Videos</a>
-            </li>
 
             <li class="nav-item">
               <span class="badge badge-danger">
@@ -273,14 +271,15 @@
 
       <!--Section: Products v.3-->
       <section class="text-center">
+        <h1><b><u>Tutorials</u></b></h1>
 
         <!--Grid row-->
         <div class="row wow white">
 
-          {% for item in object_list %}
+          {% for sinema in object_list %}
 
               <!--Grid column-->
-              <div class="col-lg-3 col-md-6 mb-4">
+              <div class="col-lg-3 col-md-12 mb-4">
 
                 <!--Card-->
                 <div class="container">
@@ -299,23 +298,21 @@
 
                   <!--Card content-->
                   <div class="card-body text-center">
-                    <!--Category & Title-->
-                    <a href="" class="grey-text">
-                      <h5>{{ item.get_exam_display }}</h5>
-                    </a>
-                    <h5>
-                      <strong>
-                        <a href="{% url 'product-detail' item.id %}" class="dark-grey-text">{{ item.title }}
-                          <span class="badge badge-pill {{item.get_label_display}}-color">Premium (Top Selling)</span>
-                        </a>
-                      </strong>
-                    </h5>
+                    <div class="responsive">
+                        <strong class="text-center"><b>{{ sinema.title }}</b></strong>
+                                        
+                        <div class='iframe-container'>
+                          
+                            {% video sinema.afroamigos as my_video %}
+                              
+                                {% video my_video '250x250' %}
 
-                    <h4 class="font-weight-bold red-text">
-                      <strong>Ksh{{ item.discountedprice }}</strong>
-                    </h4>
-                    <a href="{% url 'product-detail' item.id %}" class="btn btn-Success btn-sm my-0 p waves-effect waves-light">View Paper
-                    </a>             
+                            {% endvideo %}
+
+                        </div>
+                
+                    </div>
+            
 
                   </div>
                   <!--Card content-->

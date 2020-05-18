@@ -128,10 +128,12 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{order_item.item.title}}</td>
                 {% if order_item.item.link_url1 %}
-                <td ><a target="blank" href='{{ order_item.item.link_url1 }}'>Download1</a></td>
+                <td >
+                  <a href='{{ order_item.item.link_url1 }}'class="btn btn-outline-primary btn-sm"><i class="fa fa-download"></i>Download</a> 
+                </td>
                 {% endif %}
                 {% if order_item.item.link_url2 %}
-                <td><a href='{{ order_item.item.link_url2 }}'>Download2</a></td>
+                <td><a href='{{ order_item.item.link_url2 }}'>Download</a></td>
                 {% endif %}
                  {% if order_item.item.link_url3 %}
                 <td><a target= "blank" href='{{ order_item.item.link_url3 }}'>Download3</a></td>
