@@ -26,7 +26,7 @@
     }
 .view,body,html{height:100%}.carousel{height:50%}.carousel .carousel-inner,.carousel .carousel-inner .active,.carousel .carousel-inner .carousel-item{height:100%}@media (max-width:776px){.carousel{height:100%}}.page-footer{background-color:#929FBA}</style><style type="text/css">/* Chart.js */
 @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head><body aria-busy="true"><!-- Navbar -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+  <nav class="navbar fixed-top navbar-expand-sm navbar-light white scrolling-navbar">
     <div class="container">
 
      
@@ -52,6 +52,35 @@
          
           
         </ul> 
+        <ul class="navbar-nav nav-flex-icons">
+          
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'logout' %}">Logout</a>
+          </li>
+          <li>
+            <a class="nav-link waves-effect" href="{% url 'profile' %}">Profile</a>
+          </li>
+          <li>
+            <a class="nav-link waves-effect" href="{% url 'complete' %}">Purchases</a>
+          </li>
+          
+          
+
+          {% else %}
+          <li>
+            <a class="nav-link waves-effect" href="{% url 'complete' %}">Purchases</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'register' %}">Register</a>
+          </li>
+          {% endif %}
+          
+        </ul>
            
 
       </div>
@@ -78,19 +107,98 @@
               {% csrf_token %}
 
               <hr>
+              <div class="ml-3">
 
-              <h3>Enter M-Pesa Phone</h3>
+              <h5><u>Enter M-pesa Details</u></h5>
 
                 <div class="container">
                   {{ p_form|crispy }}          
 
                 </div>
+              </div>
+
+                <div class="ml-3">
+                  <h5><u>Payment Procedure</u></h5>
+                  <p class="blue-text text-sm">Go to M-PESA Menu and select <mark>Lipa Na M-PESA</mark> then <mark>Buy Goods & Servives</mark></p>
+                  <p class="blue-text text-sm">Enter the Till Number<mark>5176949</mark></p>
+                  <!-- <p class="blue-text text-sm">Enter the Till Number: 5176949</p> -->
+                  <p class="blue-text text-sm">Enter the Total Amount
+                      <mark class="red-text"><strong>Ksh {{ order.get_total }}</strong></mark></p>
+                  <p class="blue-text text-sm">Enter your M-PESA PIN</p>
+                  <p class="blue-text text-sm">Confirm and press <mark>Okay</mark></p>
+                  <p class="blue-text text-sm">Receive confirmation SMS</p>
+                  <p class="blue-text text-sm">Press <mark>Place Order</mark> Button below</p>
+                  <p class="text-muted font-small"><ins>Polite reminder: After receiving your payment, we will review your transaction and activate the order. Active Orders can be downloaded from <mark>Purchases</mark> Tab in the nav bar</ins></p>
+                </div>
+
+
 
 
               <hr class="mb-4">
-              <button class="btn btn-primary btn-sm btn-block" type="submit">checkout</button>
+              <button class="btn btn-success btn-sm" type="submit">Place Order</button>
 
             </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-4">
+          <div class="card">
+            <!-- Details -->
+          <!-- Heading -->
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Order Details</span>
+            <span class="badge badge-secondary badge-pill">{{ order.items.count }}</span>
+          </h4>
+
+          <!-- Cart -->
+          <ul class="list-group mb-3 z-depth-1">
+            {% for order_item in order.items.all %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{ order_item.quantity }} X {{ order_item.item.title }}</h6>
+              </div>
+              <span >Ksh {{ order_item.get_total_final_price }}</span>
+            </li>
+             {% endfor %}        
+            <li class="list-group-item d-flex justify-content-between red-text">
+              <span>Total Amount (Ksh)</span>
+              <strong>Ksh {{ order.get_total }}</strong>
+            </li>
+          </ul>
+         
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow blue">
+
+    
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <!-- <div class="footer-copyright py-1">
+      © 2020 Copyright:Skoolflyx:
+      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
+    </div> -->
+
+     <i>created and designed by</i><a href="https://frankfredtechweb.herokuapp.com" target="_blank"> FrankFred|Tech </a>
+
+  </footer>
+  <!--/.Footer-->
+            <!-- End DEtails -->
           </div>
         </div>
       </div>

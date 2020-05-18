@@ -26,7 +26,7 @@ stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
 class HomeView(ListView):
 	model = Item
-	paginate_by = 10
+	paginate_by = 80
 	template_name = 'home.html'
 	ordering = ['-id']
 
@@ -57,7 +57,7 @@ class BillCheckoutView(CreateView):
 	model = BillingAddress
 	success_url = '/selector/'
 	template_name = 'checkout.html'
-	fields = ['school', 'school_address', 'country', 'school_code']
+	fields = ['school', 'school_address', 'school_code']
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
@@ -82,54 +82,15 @@ class PaymentView(LoginRequiredMixin, View):
 		return render(self.request, 'payment.html', context)
 
 	def post(self, *args, **kwargs):
+		order=Order.objects.get(user=self.request.user, ordered=False)
+		order_amount = order.get_total()
 		p_form = PaymentForm(self.request.POST or None)
 		if p_form.is_valid():
 			my_phone=p_form.cleaned_data.get('my_phone')
-			
-		try:
-			order = Order.objects.get(user=self.request.user, ordered=False)
-			consumer_key = my_consumer_key
-			consumer_secret = my_consumer_secret
-			api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-			r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
-			json_response = r.json()
-			# my_access_token=json_response['my_access_token']
-			timestamp = datetime.now()
-			formated_time = timestamp.strftime('%Y%m%d%H%M%S')
-			password_token = business_shortcode + lipa_na_mpesa_passkey + formated_time
-			encode_password = base64.b64encode(password_token.encode())
-			decoded_password = encode_password.decode('utf-8')
-			order_amount = order.get_total()
-			# decoded_pass = encoded_str.decode('utf-8')
-			# consumer_key = "my_consumer_key"
-			# consumer_secret = "my_consumer_secret"
-			api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-
-			# r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
-			responce = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret)).json()
-			myaccesstoken = responce['access_token']
-			access_token = myaccesstoken
-			api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-			headers = { "Authorization": "Bearer %s" % access_token }
-			request = {
-					"BusinessShortCode": 174379,
-					"Password": decoded_password,
-					"Timestamp": formated_time,
-					"TransactionType": "CustomerPayBillOnline",
-					"Amount": order_amount,
-					"PartyA": my_phone,
-					"PartyB": 174379,
-					"PhoneNumber": my_phone,
-					"CallBackURL": "https://skoolflyx.com",
-					"AccountReference": "2884321",
-					"TransactionDesc": "pay fees"
-			}
-
-			response = requests.post(api_url, json = request, headers=headers)
-			  	# print (response.text)
-						
+			mpesa_name=p_form.cleaned_data.get('m_pesa_name')
 			payment = Payment(
 				user = self.request.user,
+				name = mpesa_name,
 				phone = my_phone,
 				amount = order_amount
 			)
@@ -137,11 +98,66 @@ class PaymentView(LoginRequiredMixin, View):
 			payment.save()
 			order.payment=payment
 			order.save()
-			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and once we are done, we will activate the order and you will be able to access the materials at Purchases tab in the nav bar.')
-			return redirect('home')
-		except:
-			messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and once we are done, we will activate the order and you will be able to access the materials at Purchases tab in the nav bar.')
-			return redirect('home')
+			messages.success(self.request, 'Thank you for choosing SchoolFlyx. We have received your request and we are currently reviewing your payment. Once we are done, we will activate the order (within 5 min). Ordered materials can be access in "Purchases" tab in the nav bar.')
+		return redirect('home')
+			
+		# try:
+		# 	order = Order.objects.get(user=self.request.user, ordered=False)
+			# consumer_key = my_consumer_key
+			# consumer_secret = my_consumer_secret
+			# api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+			# r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+			# json_response = r.json()
+			# # my_access_token=json_response['my_access_token']
+			# timestamp = datetime.now()
+			# formated_time = timestamp.strftime('%Y%m%d%H%M%S')
+			# password_token = business_shortcode + lipa_na_mpesa_passkey + formated_time
+			# encode_password = base64.b64encode(password_token.encode())
+			# decoded_password = encode_password.decode('utf-8')
+			# order_amount = order.get_total()
+			# # decoded_pass = encoded_str.decode('utf-8')
+			# # consumer_key = "my_consumer_key"
+			# # consumer_secret = "my_consumer_secret"
+			# api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+
+			# # r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+			# responce = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret)).json()
+			# myaccesstoken = responce['access_token']
+			# access_token = myaccesstoken
+			# api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+			# headers = { "Authorization": "Bearer %s" % access_token }
+			# request = {
+			# 		"BusinessShortCode": 174379,
+			# 		"Password": decoded_password,
+			# 		"Timestamp": formated_time,
+			# 		"TransactionType": "CustomerPayBillOnline",
+			# 		"Amount": order_amount,
+			# 		"PartyA": my_phone,
+			# 		"PartyB": 174379,
+			# 		"PhoneNumber": my_phone,
+			# 		"CallBackURL": "https://skoolflyx.com",
+			# 		"AccountReference": "2884321",
+			# 		"TransactionDesc": "pay fees"
+			# }
+
+			# response = requests.post(api_url, json = request, headers=headers)
+			#   	# print (response.text)
+						
+		# 	payment = Payment(
+		# 		user = self.request.user,
+		# 		name = mpesa_name,
+		# 		phone = my_phone,
+		# 		amount = order_amount
+		# 	)
+
+		# 	payment.save()
+		# 	order.payment=payment
+		# 	order.save()
+		# 	messages.success(self.request, 'Kindly check your phone for pin-prompt and complete the order.Once you have done that, we will review your transaction and once we are done, we will activate the order and you will be able to access the materials at Purchases tab in the nav bar.')
+		# 	return redirect('home')
+		# except:
+		# 	messages.warning(self.request, 'Invalid payment selected')
+		# 	return redirect('order-summary')
 
 class Payment2View(LoginRequiredMixin, View):
 	def get(self, *args, **kwargs):

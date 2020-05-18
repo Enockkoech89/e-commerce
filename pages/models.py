@@ -117,7 +117,6 @@ class BillingAddress(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	school = models.CharField(max_length=100)
 	school_address = models.CharField(max_length=100)
-	country = CountryField(multiple=False)
 	school_code = models.CharField(max_length=100)
 
 	def __str__(self):
@@ -128,6 +127,7 @@ class BillingAddress(models.Model):
 class Payment(models.Model):
 	stripe_charge_id = models.CharField(blank=True, null=True, max_length=100)
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+	name = models.CharField(blank=True, null=True, max_length=100)
 	phone = models.IntegerField(blank=True, null=True)
 	amount = models.FloatField()
 	timestamp = models.DateTimeField(auto_now_add=True)
