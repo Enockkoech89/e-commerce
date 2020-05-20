@@ -128,7 +128,7 @@ class Payment(models.Model):
 	stripe_charge_id = models.CharField(blank=True, null=True, max_length=100)
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
 	name = models.CharField(blank=True, null=True, max_length=100)
-	phone = models.IntegerField(blank=True, null=True)
+	phone = models.CharField(blank=True, null=True, max_length=100)
 	amount = models.FloatField()
 	timestamp = models.DateTimeField(auto_now_add=True)
 
