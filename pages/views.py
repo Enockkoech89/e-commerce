@@ -98,7 +98,7 @@ class PaymentView(LoginRequiredMixin, View):
 			payment.save()
 			order.payment=payment
 			order.save()
-			messages.success(self.request, 'Thank you for choosing SchoolFlyx. We have received your request and we are currently reviewing your transaction. Once we receive your payment, we will activate the order (within 5 min). Ordered materials can be access in "Purchases" tab in the nav bar.')
+			messages.success(self.request, 'Thank you for choosing SchoolFlyx. We have received your request and we are currently reviewing your transaction. Once we receive your payment, we will activate the order (within 5 min). Ordered materials can be access in "Purchases" tab located at the nav bar.')
 		return redirect('home')
 			
 		# try:
