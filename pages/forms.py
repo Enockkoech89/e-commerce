@@ -7,7 +7,7 @@ from .models import Profile, BillingAddress
 
 class PaymentForm( forms.Form):
 	my_phone = forms.IntegerField(widget=forms.TextInput(attrs={
-		'class':'form-control','placeholder':'2547123XXXXX'
+		'class':'form-control','placeholder':'07XXXXXXXX'
 		}))
 	m_pesa_name = forms.CharField(widget=forms.TextInput(attrs={
 		'class':'form-control','placeholder':'Enter your Real M-pesa name'
