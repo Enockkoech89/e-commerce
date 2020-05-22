@@ -14,7 +14,8 @@ class Free(models.Model):
 class Item(models.Model):
 	Exam_Type = (
 		('PR', 'Pri'),
-		('SR', 'Sec')
+		('SR', 'Sec'),
+		('BO', 'Book')
 	)
 
 	LABEL_CHOICES = (
