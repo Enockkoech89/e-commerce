@@ -279,10 +279,13 @@
                   <!--Card image-->
                   <div class="view overlay">
                     {% if item.image1 %}
-                      <img src="{{ item.image1.url }}" class="card-img-top" width="100%" height="250" alt="">
+                   
+                     <img src="{{ item.image1.url }}" class="card-img-top" width="100%" height="250" alt="">
+                     
                     {% endif %}
+
                     
-                    <a>
+                    <a href="{% url 'product-detail' item.id %}">
                       <div class="mask rgba-white-slight waves-effect waves-light"></div>
                     </a>
                   </div>
@@ -291,7 +294,7 @@
                   <!--Card content-->
                   <div class="card-body text-center">
                     <!--Category & Title-->
-                    <a href="" class="grey-text">
+                    <a href="{% url 'product-detail' item.id %}" class="grey-text">
                       <h5>{{ item.get_exam_display }}</h5>
                     </a>
                     <h5>
